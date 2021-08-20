@@ -8,6 +8,10 @@ paginator = boto3.client('s3').get_paginator('list_objects_v2')
 def lambda_handler(event, context):
 	key = event['Records'][0]['s3']['object']['key']
 	if 'SUCCESS' in key:
+		year=str(event['Records'][0]['s3']['object']['key']).split("/")[1].split("%3D")[1]
+		month=str(event['Records'][0]['s3']['object']['key']).split("/")[2].split("%3D")[1]
+		week=str(event['Records'][0]['s3']['object']['key']).split("/")[3].split("%3D")[1]
+		params2=year+","+month+","+week
     # list all vcfs by paginating
 # output=2500
 		output = subprocess.getoutput('/opt/aws s3 ls ab3/dev_input_vcf/ | wc -l')
@@ -45,6 +49,7 @@ def lambda_handler(event, context):
 					params=params+str(obj['Key']).split("/")[-1].split(".")[0]+","
 			#params='\"'+params[:-1]+'\"'
 			params=params[:-1]
+			params=str(params)+" "+str(params2)
 			print(params)
 
 			# Horizontal scaling: parallel processing via multiple clusters
