@@ -15,7 +15,7 @@ hl.init()
 spark = SparkSession.builder.getOrCreate()
 
 for i in sample_id:
-	filename = 's3://ab3/dev_input_vcf/' + i + '/' + i + '.hard-filtered.vcf.bgz'
+	filename = 's3://ab3/dev_input_vcf/year=2021/month=8/wk=3' + i + '/' + i + '.hard-filtered.vcf.bgz'
 	#if "additional_698_related" in filename:
 	#	continue
 	#else:

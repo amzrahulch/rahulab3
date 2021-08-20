@@ -33,7 +33,8 @@ def lambda_handler(event, context):
 		maxkey=int(int(output)/2)
 
 	# script which converts vcf to parquet
-		s3_script_path='s3://ab3/dev_artifacts/vcf_parquet_transform_dev.py'
+		#s3_script_path='s3://ab3/dev_artifacts/vcf_parquet_transform_dev.py'
+		s3_script_path='s3://ab3/dev_artifacts/test/ETL/vcf_parquet_transform_dev.py'
 		print(output,maxkey)
 		pages = paginator.paginate(Bucket='ab3',Prefix='dev_input_vcf/',MaxKeys=maxkey)
 		params=''
@@ -41,7 +42,7 @@ def lambda_handler(event, context):
 		for page in pages:
 			for obj in page['Contents']:
 				if 'bgz' in str(obj['Key']):
-					params=params+str(obj['Key']).split("/")[1]+","
+					params=params+str(obj['Key']).split("/")[-1].split(".")[0]+","
 			#params='\"'+params[:-1]+'\"'
 			params=params[:-1]
 			print(params)
