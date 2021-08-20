@@ -4,10 +4,10 @@ import time
 import os
 paginator = boto3.client('s3').get_paginator('list_objects_v2')
 #s3 = boto3.client('s3')
-	
+
 def lambda_handler(event, context):
 	key = event['Records'][0]['s3']['object']['key']
-	if 'SUCCESS' in key: 
+	if 'SUCCESS' in key:
     # list all vcfs by paginating
 # output=2500
 		output = subprocess.getoutput('/opt/aws s3 ls ab3/dev_input_vcf/ | wc -l')
@@ -27,7 +27,7 @@ def lambda_handler(event, context):
 		autoscaling_role='emr-autoscaling-hailtest'
 		scale_down_behavior='TERMINATE_AT_TASK_COMPLETION'
 		custom_ami_id='ami-0f33e21674eed03c6'
-		num_file_per_cluster=26	
+		num_file_per_cluster=26
 
 	# determine the number of files you want to process in one cluster / multiple clusters
 		maxkey=int(int(output)/2)
